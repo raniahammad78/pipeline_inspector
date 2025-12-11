@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pipeline_inspector_pipeline,pipeline.inspector.pipeline,model_pipeline_inspector_pipeline,,1,1,1,1
+access_pipeline_inspector_dashboard,pipeline.inspector.dashboard,model_pipeline_inspector_dashboard,,1,1,1,1
+access_pipeline_inspector_support,pipeline.inspector.support,model_pipeline_inspector_support,,1,1,1,1
+access_pipeline_inspector_inspection,pipeline.inspector.inspection,model_pipeline_inspector_inspection,,1,1,1,1
