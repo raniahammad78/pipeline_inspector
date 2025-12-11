@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <menuitem id="menu_pipeline_inspector_root"
+                  name="Pipeline Inspector"
+                  sequence="4"/>
+
+        <menuitem id="menu_pipeline_inspector_dashboard"
+                  name="Dashboard"
+                  parent="menu_pipeline_inspector_root"
+                  action="action_pipeline_inspector_dashboard"
+                  sequence="1"/>
+
+        <menuitem id="menu_pipeline_inspector_pipeline"
+                  name="Pipelines"
+                  parent="menu_pipeline_inspector_root"
+                  action="action_pipeline_inspector_pipeline"
+                  sequence="2"/>
+    </data>
+</odoo>

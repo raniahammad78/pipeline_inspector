@@ -1,0 +1,159 @@
+<odoo>
+    <data>
+        <record id="pipeline_inspector_dashboard_view" model="ir.ui.view">
+            <field name="name">pipeline.inspector.dashboard.form</field>
+            <field name="model">pipeline.inspector.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard" create="false" delete="false" edit="false">
+
+                    <div class="container-fluid pt-3 pb-3 bg-white border-bottom sticky-top" style="z-index: 1000;">
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div class="d-flex align-items-center gap-3">
+                                <h3 class="mb-0 fw-bold text-dark">Dashboard</h3>
+                                <button name="action_create_new_pipeline"
+                                        string="+ New Pipeline"
+                                        type="object"
+                                        class="btn btn-primary btn-sm px-3 fw-bold"
+                                        style="background-color: #0d6efd !important; border: none; border-radius: 50px;"/>
+                            </div>
+
+                            <div class="btn-group" role="group">
+                                <button name="set_filter_all" string="All Time" type="object"
+                                        class="btn btn-sm btn-outline-secondary border-0 fw-bold"
+                                        invisible="filter_option == 'all'"/>
+                                <button name="set_filter_all" string="All Time" type="object"
+                                        class="btn btn-sm btn-dark fw-bold px-3 rounded-pill"
+                                        invisible="filter_option != 'all'"/>
+
+                                <button name="set_filter_month" string="This Month" type="object"
+                                        class="btn btn-sm btn-outline-secondary border-0 fw-bold"
+                                        invisible="filter_option == 'month'"/>
+                                <button name="set_filter_month" string="This Month" type="object"
+                                        class="btn btn-sm btn-dark fw-bold px-3 rounded-pill"
+                                        invisible="filter_option != 'month'"/>
+
+                                <button name="set_filter_today" string="Today" type="object"
+                                        class="btn btn-sm btn-outline-secondary border-0 fw-bold"
+                                        invisible="filter_option == 'today'"/>
+                                <button name="set_filter_today" string="Today" type="object"
+                                        class="btn btn-sm btn-dark fw-bold px-3 rounded-pill"
+                                        invisible="filter_option != 'today'"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid p-4" style="background-color: #f1f3f6; min-height: 100vh;">
+
+                        <div class="row mb-4 g-4">
+                            <div class="col-md-4">
+                                <div class="card border-0 h-100 p-4 shadow-sm" style="border-radius: 16px;">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <span class="text-dark text-uppercase small"
+                                                  style="letter-spacing: 1px; font-weight: 800;">Total Pipelines
+                                            </span>
+                                            <h1 class="mb-0 text-dark mt-2 display-6" style="font-weight: 800;">
+                                                <field name="total_pipelines"/>
+                                            </h1>
+                                        </div>
+                                        <div class="p-3 rounded-circle bg-primary bg-opacity-10 text-primary">
+                                            <i class="fa fa-database fa-2x"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card border-0 h-100 p-4 shadow-sm" style="border-radius: 16px;">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <span class="text-dark text-uppercase small"
+                                                  style="letter-spacing: 1px; font-weight: 800;">Active Inspections
+                                            </span>
+                                            <h1 class="mb-0 text-dark mt-2 display-6" style="font-weight: 800;">
+                                                <field name="active_inspections"/>
+                                            </h1>
+                                        </div>
+                                        <div class="p-3 rounded-circle bg-info bg-opacity-10 text-info">
+                                            <i class="fa fa-refresh fa-spin fa-2x"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card border-0 h-100 p-4 shadow-sm" style="border-radius: 16px;">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <span class="text-dark text-uppercase small"
+                                                  style="letter-spacing: 1px; font-weight: 800;">Engineers
+                                            </span>
+                                            <h1 class="mb-0 text-dark mt-2 display-6" style="font-weight: 800;">
+                                                <field name="engineers_count"/>
+                                            </h1>
+                                        </div>
+                                        <div class="p-3 rounded-circle bg-warning bg-opacity-10 text-warning">
+                                            <i class="fa fa-users fa-2x"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="card border-0 h-100 shadow-sm"
+                                     style="border-radius: 16px; overflow: hidden;">
+                                    <div class="card-header bg-white border-bottom p-4">
+                                        <h5 class="fw-bold mb-0 text-dark">Recent Activity</h5>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <field name="recent_pipeline_ids" mode="list">
+                                            <list string="Recent" create="false" delete="false" edit="false">
+                                                <field name="pipeline_name" decoration-bf="1" string="Pipeline"/>
+                                                <field name="location"/>
+                                                <field name="create_date" widget="date"/>
+                                                <field name="state" widget="badge"
+                                                       decoration-success="state == 'done'"
+                                                       decoration-info="state == 'in_progress'"
+                                                       decoration-muted="state == 'draft'"/>
+                                            </list>
+                                        </field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card border-0 h-100 p-4 shadow-sm" style="border-radius: 16px;">
+                                    <h5 class="fw-bold mb-4 text-dark">Inspection Status</h5>
+                                    <div class="mb-4">
+                                        <div class="fw-bold text-dark mb-1">Completed</div>
+                                        <field name="percent_done" widget="progressbar" nolabel="1"/>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="fw-bold text-dark mb-1">In Progress</div>
+                                        <field name="percent_in_progress" widget="progressbar" nolabel="1"/>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="fw-bold text-dark mb-1">Pending</div>
+                                        <field name="percent_pending" widget="progressbar" nolabel="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pipeline_inspector_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">pipeline.inspector.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="res_id" ref="pipeline_inspector.my_dashboard_record"/>
+            <field name="target">current</field>
+        </record>
+    </data>
+</odoo>

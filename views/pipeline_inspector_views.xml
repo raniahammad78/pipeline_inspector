@@ -1,0 +1,725 @@
+<odoo>
+    <data>
+        <record id="pipeline_inspection_form_view" model="ir.ui.view">
+            <field name="name">pipeline.inspector.inspection.form</field>
+            <field name="model">pipeline.inspector.inspection</field>
+            <field name="arch" type="xml">
+                <form string="Edit Pipeline Inspection">
+                    <sheet>
+                        <div class="mb-4">
+                            <h2 class="fw-bold">Edit Pipeline Inspection</h2>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">1. General visual condition of the Support</div>
+                            <group>
+                                <field name="q1_condition" widget="selection" string="Condition"/>
+                                <field name="q1_comment" string="Comments" placeholder="Add comments..."/>
+                                <field name="q1_recommendation" string="Recommendations"
+                                       placeholder="Add recommendations..."/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos (up to 5)</div>
+                            <field name="q1_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">2. Condition of corrosion under pipe support</div>
+                            <group>
+                                <field name="q2_condition" widget="selection" string="Condition"/>
+                                <field name="q2_comment" string="Comments"/>
+                                <field name="q2_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q2_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">3. External mechanical damage</div>
+                            <group>
+                                <field name="q3_condition" widget="selection" string="Condition"/>
+                                <field name="q3_comment" string="Comments"/>
+                                <field name="q3_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q3_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">4. External Corrosion</div>
+                            <group>
+                                <field name="q4_condition" widget="selection" string="Condition"/>
+                                <field name="q4_comment" string="Comments"/>
+                                <field name="q4_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q4_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">5. Misalignment</div>
+                            <group>
+                                <field name="q5_condition" widget="selection" string="Condition"/>
+                                <field name="q5_comment" string="Comments"/>
+                                <field name="q5_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q5_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">6. Leakage</div>
+                            <group>
+                                <field name="q6_condition" widget="selection" string="Condition"/>
+                                <field name="q6_comment" string="Comments"/>
+                                <field name="q6_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q6_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">7. Pipe Shoes</div>
+                            <group>
+                                <field name="q7_condition" widget="selection" string="Condition"/>
+                                <field name="q7_comment" string="Comments"/>
+                                <field name="q7_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q7_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">8. Brackets</div>
+                            <group>
+                                <field name="q8_condition" widget="selection" string="Condition"/>
+                                <field name="q8_comment" string="Comments"/>
+                                <field name="q8_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q8_images" widget="many2many_binary"/>
+                        </div>
+
+                        <div class="mb-4 p-3 bg-light rounded border">
+                            <div class="fw-bold fs-5 mb-2">9. Insulation</div>
+                            <group>
+                                <field name="q9_condition" widget="selection" string="Condition"/>
+                                <field name="q9_comment" string="Comments"/>
+                                <field name="q9_recommendation" string="Recommendations"/>
+                            </group>
+                            <div class="fw-bold mt-2">Add More Photos</div>
+                            <field name="q9_images" widget="many2many_binary"/>
+                        </div>
+
+                    </sheet>
+                    <footer>
+                        <button string="Update Inspection" special="save" class="btn btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="pipeline_inspection_report_view" model="ir.ui.view">
+            <field name="name">pipeline.inspector.inspection.report</field>
+            <field name="model">pipeline.inspector.inspection</field>
+            <field name="arch" type="xml">
+                <form string="Inspection Report" create="false" edit="false" delete="false">
+                    <sheet>
+                        <h4 class="mb-4 pb-2 border-bottom text-center">Checklist</h4>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">1. General visual condition
+                                    of the Support?
+                                </span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q1_condition" widget="badge" decoration-success="q1_condition == 'c'"
+                                           decoration-warning="q1_condition == 'b'"
+                                           decoration-danger="q1_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted" title="Photos"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q1_comment" readonly="1" class="text-dark"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q1_recommendation" readonly="1" class="text-dark"/>
+                                    </div>
+                                </div>
+                                <field name="q1_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div class="position-relative"
+                                                     style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">2. Condition of corrosion
+                                    under pipe support?
+                                </span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q2_condition" widget="badge" decoration-success="q2_condition == 'c'"
+                                           decoration-warning="q2_condition == 'b'"
+                                           decoration-danger="q2_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q2_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q2_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q2_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">3. External mechanical
+                                    damage?
+                                </span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q3_condition" widget="badge" decoration-success="q3_condition == 'c'"
+                                           decoration-warning="q3_condition == 'b'"
+                                           decoration-danger="q3_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q3_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q3_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q3_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">4. External Corrosion?</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q4_condition" widget="badge" decoration-success="q4_condition == 'c'"
+                                           decoration-warning="q4_condition == 'b'"
+                                           decoration-danger="q4_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q4_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q4_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q4_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">5. Misalignment?</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q5_condition" widget="badge" decoration-success="q5_condition == 'c'"
+                                           decoration-warning="q5_condition == 'b'"
+                                           decoration-danger="q5_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q5_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q5_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q5_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">6. Leakage?</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q6_condition" widget="badge" decoration-success="q6_condition == 'c'"
+                                           decoration-warning="q6_condition == 'b'"
+                                           decoration-danger="q6_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q6_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q6_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q6_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">7. Pipe Shoes?</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q7_condition" widget="badge" decoration-success="q7_condition == 'c'"
+                                           decoration-warning="q7_condition == 'b'"
+                                           decoration-danger="q7_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q7_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q7_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q7_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">8. Brackets?</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q8_condition" widget="badge" decoration-success="q8_condition == 'c'"
+                                           decoration-warning="q8_condition == 'b'"
+                                           decoration-danger="q8_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q8_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q8_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q8_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom-0">
+                                <span class="fw-bold text-dark" style="font-size: 1.1rem;">9. Insulation?</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="q9_condition" widget="badge" decoration-success="q9_condition == 'c'"
+                                           decoration-warning="q9_condition == 'b'"
+                                           decoration-danger="q9_condition in ('a1','a2')"/>
+                                    <i class="fa fa-camera text-muted"/>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row mb-2">
+                                    <div class="col-3 text-muted">Comment</div>
+                                    <div class="col-9">
+                                        <field name="q9_comment" readonly="1"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-3 text-muted">Recommendation</div>
+                                    <div class="col-9">
+                                        <field name="q9_recommendation" readonly="1"/>
+                                    </div>
+                                </div>
+                                <field name="q9_images" mode="kanban" readonly="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="datas"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div style="width: 100px; height: 100px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; margin: 5px;">
+                                                    <field name="datas" widget="image"
+                                                           options="{'preview_image': 'datas'}"
+                                                           style="width: 100%; height: 100%; object-fit: cover;"/>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-4">
+                            <span class="badge bg-light text-muted border px-3 py-2 rounded-pill">Reviewed</span>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button string="Close" special="cancel" class="btn btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_pipeline_support_create_form" model="ir.ui.view">
+            <field name="name">pipeline.inspector.support.create.form</field>
+            <field name="model">pipeline.inspector.support</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <form string="Add New Support">
+                    <sheet>
+                        <div class="mb-4">
+                            <h3 class="fw-bold">Add New Support</h3>
+                            <span class="text-muted">Enter the support name and upload images.</span>
+                        </div>
+                        <label for="support_code" string="Support Name" class="fw-bold"/>
+                        <div class="o_row d-flex gap-2 mb-3">
+                            <field name="support_code" placeholder="Support (e.g., ABC00000/DEF000)" style="flex: 1;"/>
+                            <field name="support_level" placeholder="Level (e.g., L.01/L.02)" style="flex: 1;"/>
+                            <field name="pipe_ref" placeholder="Pipe (e.g., P.123)" style="flex: 1;"/>
+                        </div>
+                        <group>
+                            <field name="cup_type" placeholder="Select option" widget="selection"/>
+                            <field name="pipeline_id" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Create Support" special="save" class="btn btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="pipeline_inspector_pipeline_form_view" model="ir.ui.view">
+            <field name="name">pipeline.inspector.pipeline.form</field>
+            <field name="model">pipeline.inspector.pipeline</field>
+            <field name="arch" type="xml">
+                <form string="Pipeline" edit="false">
+                    <header>
+                        <button name="action_set_in_progress" string="Start Inspection" type="object"
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_set_done" string="Mark as Done" type="object" class="btn-success"
+                                invisible="state != 'in_progress'"/>
+                        <button name="action_reset_draft" string="Reset to Pending" type="object" class="btn-secondary"
+                                invisible="state in ('draft', 'in_progress')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                    </header>
+                    <div class="container-fluid p-4" style="background-color: #f8f9fa; min-height: 100vh;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-white border rounded p-2 text-center" style="width: 40px; height: 40px;">
+                                    <i class="fa fa-cube text-muted"/>
+                                </div>
+                                <div>
+                                    <h2 class="mb-0 fw-bold text-dark">
+                                        <field name="pipeline_name" placeholder="Pipeline Name"/>
+                                    </h2>
+                                    <small class="text-muted">Pipeline Details •
+                                        <field name="location" nolabel="1" class="d-inline"/>
+                                    </small>
+                                </div>
+                            </div>
+                            <button name="action_delete_pipeline" string="Delete Pipeline" type="object"
+                                    class="btn btn-danger text-white" confirm="Delete this record?"/>
+                        </div>
+
+                        <div class="card border-0 shadow-sm mb-4 rounded-3">
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold text-dark mb-4">Basic Information</h4>
+                                <group>
+                                    <group>
+                                        <field name="id" string="Serial Number" readonly="1"/>
+                                        <field name="location" placeholder="Enter location..."/>
+                                        <field name="engineer_id" widget="many2one_avatar_user"/>
+                                    </group>
+                                    <group>
+                                        <field name="create_date" string="Created" readonly="1" widget="date"/>
+                                    </group>
+                                </group>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm mb-4 rounded-3">
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold text-dark mb-1">Question Set</h4>
+                                <group>
+                                    <group>
+                                        <field name="area" string="Area"/>
+                                        <field name="system_name" string="System Name"/>
+                                        <field name="drawing_iso_number" string="Drawing ISO Number"/>
+                                        <field name="design_pressure_bar_min" string="Design Pressure (Bar) Min"/>
+                                        <field name="design_pressure_bar_max" string="Design Pressure (Bar) Max"/>
+                                        <field name="design_temp_c_min" string="Design Temp (°C) Min"/>
+                                        <field name="design_temp_c_max" string="Design Temp (°C) Max"/>
+                                        <field name="insulation" string="Insulation"/>
+                                        <field name="design_code" string="Design Code"/>
+                                        <field name="corr_allowance" string="Corr. Allowance (mm)"/>
+                                        <field name="operation_pressure" string="Operation pressure"/>
+                                        <field name="operation_temp" string="Operation Temp"/>
+                                        <field name="painting" string="Painting"/>
+                                    </group>
+                                    <group invisible="1">
+                                        <field name="content_material"/>
+                                        <field name="material_grade"/>
+                                        <field name="material_lining"/>
+                                        <field name="diameter"/>
+                                        <field name="pipe_schedule"/>
+                                        <field name="pipe_thickness"/>
+                                    </group>
+                                </group>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm mb-4 rounded-3">
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold text-dark mb-2">Pipeline Images</h4>
+                                <span class="text-muted small d-block mb-3">High-resolution schematic and visual
+                                    inspection data
+                                </span>
+                                <field name="image_ids" widget="many2many_binary" string="Upload Images"/>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm mb-4 rounded-3">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <h4 class="fw-bold text-dark mb-0">Pipeline Supports</h4>
+                                        <small class="text-muted">Structural supports and components</small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button name="action_print_report" string="Generate report" type="object"
+                                                class="btn btn-link text-muted" style="text-decoration: none;"/>
+                                        <button name="action_add_support" string="+ Add Support" type="object"
+                                                class="btn btn-primary btn-sm"/>
+                                    </div>
+                                </div>
+                                <field name="support_ids" mode="kanban">
+                                    <kanban create="0">
+                                        <field name="name"/>
+                                        <field name="state"/>
+                                        <field name="cup_type"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div class="d-flex flex-column p-3 mb-2 border rounded bg-white shadow-sm w-100">
+                                                    <div class="mb-3">
+                                                        <h5 class="fw-bold text-dark mb-1 text-center">
+                                                            <field name="name"/>
+                                                        </h5>
+                                                        <div class="text-center text-muted small">
+                                                            <field name="cup_type"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center mb-3">
+                                                        <i class="fa fa-picture-o fa-3x text-muted"/>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between align-items-center mt-2 border-top pt-2">
+                                                        <button name="action_view_inspection" type="object"
+                                                                class="btn btn-sm text-secondary">
+                                                            <i class="fa fa-eye"/>
+                                                            View Inspection
+                                                        </button>
+                                                        <field name="state" widget="badge"
+                                                               decoration-success="state == 'reviewed'"
+                                                               decoration-info="state == 'pending'"
+                                                               decoration-danger="state == 'issue'"/>
+                                                        <div class="d-flex gap-1">
+                                                            <button name="action_edit_last_inspection" type="object"
+                                                                    class="btn btn-sm btn-outline-danger">
+                                                                <i class="fa fa-pencil"/>
+                                                                Edit Inspection
+                                                            </button>
+                                                            <a type="delete" class="btn btn-sm btn-danger text-white">
+                                                                <i class="fa fa-trash"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="pipeline_inspector_pipeline_list_view" model="ir.ui.view">
+            <field name="name">pipeline.inspector.pipeline.list</field>
+            <field name="model">pipeline.inspector.pipeline</field>
+            <field name="arch" type="xml">
+                <list string="Pipelines">
+                    <field name="id"/>
+                    <field name="pipeline_name"/>
+                    <field name="location"/>
+                    <field name="state" widget="badge" decoration-success="state == 'done'"/>
+                    <field name="supports_count"/>
+                    <field name="inspections_count"/>
+                    <button name="action_open_form" type="object" icon="fa-info-circle" title="View Details"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_pipeline_inspector_pipeline" model="ir.actions.act_window">
+            <field name="name">Pipelines</field>
+            <field name="res_model">pipeline.inspector.pipeline</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>
