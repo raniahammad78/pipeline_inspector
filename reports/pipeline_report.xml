@@ -1,0 +1,661 @@
+<odoo>
+    <data>
+        <record id="paperformat_pipeline_custom" model="report.paperformat">
+            <field name="name">Pipeline Report A4 (Custom)</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_pipeline" model="ir.actions.report">
+            <field name="name">External Visual Inspection Report</field>
+            <field name="model">pipeline.inspector.pipeline</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pipeline_inspector.report_pipeline_custom</field>
+            <field name="report_file">pipeline_inspector.report_pipeline_custom</field>
+            <field name="print_report_name">'Inspection - %s' % (object.pipeline_name)</field>
+            <field name="binding_model_id" ref="model_pipeline_inspector_pipeline"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="pipeline_inspector.paperformat_pipeline_custom"/>
+        </record>
+
+        <template id="report_pipeline_custom">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+
+                        <style>
+                            /* --- GLOBAL STYLES --- */
+                            body { font-family: Helvetica, Arial, sans-serif; font-size: 13px; color: #000; }
+
+                            /* FORCE BLACK BORDERS ON ALL TABLES */
+                            table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            font-size: 12px;
+                            margin-bottom: 10px;
+                            border: 1px solid #000000 !important;
+                            }
+                            td, th {
+                            border: 1px solid #000000 !important;
+                            padding: 5px;
+                            vertical-align: middle;
+                            }
+
+                            /* Header Box */
+                            .header-box {
+                            border: 2px solid #000000 !important;
+                            margin-bottom: 20px;
+                            height: 200px;
+                            display: flex;
+                            }
+                            .header-logo { width: 20%; display: flex; align-items: center; justify-content: center;
+                            padding: 5px; }
+                            .header-content { width: 60%; text-align: center; display: flex; flex-direction: column;
+                            justify-content: center; }
+                            .header-title { color: #000; font-weight: 900; font-size: 20pt; margin: 0; text-transform:
+                            uppercase; }
+                            .header-subtitle { color: #000; font-weight: bold; font-size: 15pt; margin: 8px 0; }
+                            .header-meta { font-size: 13px; margin-top: 5px; }
+
+                            /* Section Headers (Blue Box, Black Border) */
+                            .section-header {
+                            background-color: #1F3A8A; /* Dark Blue */
+                            color: white;
+                            font-weight: bold;
+                            font-size: 14px;
+                            padding: 5px 10px;
+                            margin-top: 15px;
+                            border: 1px solid #000000 !important;
+                            text-transform: capitalize;
+                            }
+
+                            /* DATA TABLES (Top Section) - Transparent Headers */
+                            .data-table th {
+                            background-color: transparent;
+                            font-weight: bold;
+                            width: 15%;
+                            }
+                            .data-table td { width: 18%; }
+
+                            /* INSPECTION TABLES (Bottom Section) - Blue Headers */
+                            .inspection-table th {
+                            background-color: #1F3A8A !important;
+                            color: white !important;
+                            font-weight: bold;
+                            text-align: left;
+                            padding: 8px 5px;
+                            border: 1px solid #000000 !important;
+                            }
+                            .inspection-table td {
+                            vertical-align: top;
+                            border: 1px solid #000000 !important;
+                            }
+
+                            /* SUBHEADER (Blue Box, Black Border) */
+                            .check-subheader {
+                            background-color: #1F3A8A;
+                            color: white;
+                            font-weight: bold;
+                            font-size: 14px;
+                            padding: 5px 10px;
+                            margin-top: 10px;
+                            border: 1px solid #000000 !important;
+                            border-bottom: none;
+                            }
+
+                            /* Legend Table */
+                            .legend-table th {
+                            background-color: #1F3A8A !important;
+                            color: white !important;
+                            text-align: center;
+                            border: 1px solid #000000 !important;
+                            }
+                            .legend-code { background-color: #f2f2f2; text-align: center; font-weight: bold; width:
+                            50px; }
+
+                            /* Photos */
+                            .photo-frame {
+                            border: 1px solid #000000 !important;
+                            padding: 5px;
+                            display: inline-block;
+                            background: white;
+                            margin: 5px;
+                            vertical-align: top;
+                            width: 45%;
+                            }
+                            .photo-caption { text-align: center; font-weight: bold; margin-top: 5px; font-size: 11px;
+                            color: #555; }
+
+                            .page-break { page-break-before: always; }
+                        </style>
+
+                        <div class="page">
+                            <div class="header-box">
+                                <div class="header-logo">
+                                    <img t-att-src="'/pipeline_inspector/static/img/rashpetco.png'"
+                                         style="max-height: 150px; max-width: 100%;"/>
+                                </div>
+                                <div class="header-content">
+                                    <div class="header-title">EXTERNAL VISUAL INSPECTION REPORT</div>
+                                    <div class="header-subtitle">Corrosion Under Pipe Supports (CUPS)</div>
+                                    <div class="header-meta">
+                                        <strong>Report #:</strong>
+                                        <span t-field="o.id"/> &#160;|&#160; <strong>Date:</strong>
+                                        <span t-field="o.create_date" t-options='{"widget": "date"}'/>
+                                    </div>
+                                </div>
+                                <div class="header-logo">
+                                    <img t-att-src="'/pipeline_inspector/static/img/oca_global.png'"
+                                         style="max-height: 150px; max-width: 100%;"/>
+                                </div>
+                            </div>
+
+                            <div class="section-header">Line Data</div>
+                            <table class="data-table">
+                                <tr>
+                                    <th>Line Number</th>
+                                    <td>
+                                        <span t-field="o.pipeline_name"/>
+                                    </td>
+                                    <th>Location</th>
+                                    <td>
+                                        <span t-field="o.location"/>
+                                    </td>
+                                    <th>Area</th>
+                                    <td>
+                                        <span t-field="o.area"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>System Name</th>
+                                    <td>
+                                        <span t-field="o.system_name"/>
+                                    </td>
+                                    <th>Drawing ISO</th>
+                                    <td colspan="3">
+                                        <span t-field="o.drawing_iso_number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Date Of Insp.</th>
+                                    <td colspan="5">
+                                        <span t-field="o.create_date" t-options='{"widget": "date"}'/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="section-header">Work Data</div>
+                            <table class="data-table">
+                                <tr>
+                                    <th>Content</th>
+                                    <td>
+                                        <span t-field="o.content_material"/>
+                                    </td>
+                                    <th>Design Pressure</th>
+                                    <td>Min.
+                                        <span t-field="o.design_pressure_bar_min"/>
+                                    </td>
+                                    <td>Max.
+                                        <span t-field="o.design_pressure_bar_max"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Material</th>
+                                    <td>
+                                        <span t-field="o.material_grade"/>
+                                    </td>
+                                    <th>Design Temp (°C)</th>
+                                    <td>Min.
+                                        <span t-field="o.design_temp_c_min"/>
+                                    </td>
+                                    <td>Max.
+                                        <span t-field="o.design_temp_c_max"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Material (lining)</th>
+                                    <td>
+                                        <span t-field="o.material_lining"/>
+                                    </td>
+                                    <th>Insulation</th>
+                                    <td colspan="2">
+                                        <span t-field="o.insulation"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Diameter (in)</th>
+                                    <td>
+                                        <span t-field="o.diameter"/>
+                                    </td>
+                                    <th>Design Code</th>
+                                    <td colspan="2">
+                                        <span t-field="o.design_code"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Pipe Sch./Thick</th>
+                                    <td>
+                                        <span t-field="o.pipe_schedule"/>
+                                        /
+                                        <span t-field="o.pipe_thickness"/>
+                                    </td>
+                                    <th>Corr. Allowance</th>
+                                    <td colspan="2">
+                                        <span t-field="o.corr_allowance"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <t t-if="o.image_ids">
+                                <div class="section-header">Isometric Preview</div>
+                                <div class="text-center" style="margin: 20px 0;">
+                                    <t t-foreach="o.image_ids" t-as="img">
+                                        <div class="photo-frame" style="width: 90%; max-width: 500px;">
+                                            <span t-field="img.datas"
+                                                  t-options='{"widget": "image", "style": "max-height: 350px; width: auto;"}'/>
+                                            <div class="photo-caption">
+                                                <span t-field="img.name"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="page-break"/>
+                                <div class="section-header" style="margin-top: 0;">Isometric</div>
+                                <div class="text-center" style="margin: 20px 0;">
+                                    <t t-foreach="o.image_ids" t-as="img">
+                                        <div class="photo-frame" style="width: 98%; display: block; margin: 10px auto;">
+                                            <span t-field="img.datas"
+                                                  t-options='{"widget": "image", "style": "width: 100%; height: auto;"}'/>
+                                            <div class="photo-caption">
+                                                <span t-field="img.name"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+
+                            <div class="section-header">ISO Cond.01 content CUPS the following:</div>
+                            <div style="border: 1px solid #000000; padding: 10px; min-height: 50px; font-size: 13px;">
+                                <t t-foreach="o.support_ids" t-as="supp">
+                                    <div>
+                                        <strong><span t-esc="supp_index + 1"/>-
+                                        </strong>
+                                        <span t-field="supp.name"/>
+                                    </div>
+                                </t>
+                            </div>
+
+                            <div class="section-header">Definition of Condition</div>
+                            <table class="legend-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">Code</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="legend-code">C</td>
+                                        <td>Satisfactory Condition: Support in excellent condition.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="legend-code">B</td>
+                                        <td>Less Significant Fault: Surface light rust or minor corrosion detected.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="legend-code">A1</td>
+                                        <td>Significant Fault: Surface moderate rust or moderate corrosion detected.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="legend-code">A2</td>
+                                        <td>Imminent Danger: Surface heavy rust or heavy corrosion detected.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <t t-foreach="o.support_ids" t-as="support">
+                                <div class="page-break"/>
+                                <div class="section-header" style="margin-top: 0;">CUPS #
+                                    <span t-field="support.name"/>
+                                </div>
+
+                                <t t-set="insp" t-value="support.last_inspection_id"/>
+
+                                <div class="check-subheader">Examination Activities Check List</div>
+
+                                <table class="inspection-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%; text-align: center;">No.</th>
+                                            <th style="width: 30%;">Examination Activities</th>
+                                            <th style="width: 10%; text-align: center;">Condition</th>
+                                            <th style="width: 45%;">Comments</th>
+                                            <th style="width: 10%; text-align: center;">Ref. Photos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>General Visual</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q1_condition"
+                                                      t-esc="insp.q1_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q1_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q1_images" t-esc="len(insp.q1_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>Corrosion Under Pipe</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q2_condition"
+                                                      t-esc="insp.q2_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q2_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q2_images" t-esc="len(insp.q2_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">3</td>
+                                            <td>Mechanical Damage</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q3_condition"
+                                                      t-esc="insp.q3_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q3_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q3_images" t-esc="len(insp.q3_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">4</td>
+                                            <td>External Corrosion</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q4_condition"
+                                                      t-esc="insp.q4_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q4_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q4_images" t-esc="len(insp.q4_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">5</td>
+                                            <td>Misalignment</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q5_condition"
+                                                      t-esc="insp.q5_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q5_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q5_images" t-esc="len(insp.q5_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">6</td>
+                                            <td>Leakage</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q6_condition"
+                                                      t-esc="insp.q6_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q6_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q6_images" t-esc="len(insp.q6_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">7</td>
+                                            <td>Pipe Shoes Off</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q7_condition"
+                                                      t-esc="insp.q7_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q7_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q7_images" t-esc="len(insp.q7_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">8</td>
+                                            <td>Brackets Loose</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q8_condition"
+                                                      t-esc="insp.q8_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q8_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q8_images" t-esc="len(insp.q8_images)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">9</td>
+                                            <td>Insulation Damage</td>
+                                            <td class="text-center fw-bold">
+                                                <span t-if="insp and insp.q9_condition"
+                                                      t-esc="insp.q9_condition.upper()"/>
+                                            </td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q9_comment"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="insp and insp.q9_images" t-esc="len(insp.q9_images)"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="inspection-table" style="margin-top: 15px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%; text-align: center;">No.</th>
+                                            <th style="width: 25%;">Examination Activities</th>
+                                            <th style="width: 70%;">Recommendations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>General Visual</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q1_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>Corrosion Under Pipe</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q2_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">3</td>
+                                            <td>Mechanical Damage</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q3_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">4</td>
+                                            <td>External Corrosion</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q4_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">5</td>
+                                            <td>Misalignment</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q5_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">6</td>
+                                            <td>Leakage</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q6_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">7</td>
+                                            <td>Pipe Shoes Off</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q7_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">8</td>
+                                            <td>Brackets Loose</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q8_recommendation"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">9</td>
+                                            <td>Insulation Damage</td>
+                                            <td>
+                                                <span t-if="insp" t-field="insp.q9_recommendation"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="section-header">Definition of Condition</div>
+                                <table class="legend-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;">Code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="legend-code">C</td>
+                                            <td>Satisfactory Condition: Support in excellent condition.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="legend-code">B</td>
+                                            <td>Less Significant Fault: Surface light rust or minor corrosion
+                                                detected.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="legend-code">A1</td>
+                                            <td>Significant Fault: Surface moderate rust or moderate corrosion
+                                                detected.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="legend-code">A2</td>
+                                            <td>Imminent Danger: Surface heavy rust or heavy corrosion detected.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="page-break"/>
+                                <div class="section-header" style="margin-top: 0;">Photos - CUPS #
+                                    <span t-field="support.name"/>
+                                </div>
+                                <div class="text-center" style="margin-top: 20px;">
+                                    <t t-if="insp">
+                                        <t t-foreach="insp.q1_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">1. General Visual</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q2_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">2. Corrosion Under Pipe</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q3_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">3. Mechanical Damage</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q4_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">4. External Corrosion</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q5_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">5. Misalignment</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q6_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">6. Leakage</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q7_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">7. Pipe Shoes</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q8_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">8. Brackets</div>
+                                            </div>
+                                        </t>
+                                        <t t-foreach="insp.q9_images" t-as="img">
+                                            <div class="photo-frame">
+                                                <span t-field="img.datas"
+                                                      t-options='{"widget": "image", "style": "max-height: 350px; max-width: 100%;"}'/>
+                                                <div class="photo-caption">9. Insulation</div>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </div>
+                            </t>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
